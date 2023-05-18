@@ -1,8 +1,8 @@
-import { SortPipe } from './sort.pipe';
+import { SortAndPaginatePipe } from './sort.pipe';
 
 describe('SortPipe', () => {
   it('create an instance', () => {
-    const pipe = new SortPipe();
+    const pipe = new SortAndPaginatePipe();
     expect(pipe).toBeTruthy();
   });
 });

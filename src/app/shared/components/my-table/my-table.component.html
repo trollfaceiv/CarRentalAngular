@@ -16,8 +16,8 @@
         <th scope="col" *ngFor="let x of tableConfig.headers" (click)="sortTable(x.key)">{{x.label}}</th>
     </thead>
     <tbody>
-      <tr scope="row" *ngFor="let item of data | sort: column : currentSortStatus | paginationPipe: itemPerPage : currentPage  ; let i = index">
-           <td *ngFor="let x of tableConfig.headers" >{{item[x.key]}}</td>
+      <tr scope="row" *ngFor="let item of data | sort: column : currentSortStatus : itemPerPage : currentPage; let i = index">
+        <td *ngFor="let x of tableConfig.headers" >{{item[x.key]}}</td>
            <td><ng-container *ngFor="let x of tableConfig.actions">
             <app-my-button [buttonConfig]="x.buttonConfig" (click)="performAction(x.type, item)" *ngIf="x.type !== 0"> </app-my-button>
           </ng-container>

@@ -38,6 +38,9 @@ export class MyTableComponent<T> implements OnInit{
   pageSize!: number;
   pagesOptions: number[] = [];
 
+
+  firstClick!: boolean;
+
   @Output() performActionEmitter: EventEmitter<{ action: MyTableActionEnum; rowData: any }> = new EventEmitter<{ action: MyTableActionEnum; rowData: any }>();
   @Output() performNewActionEmitter: EventEmitter<MyTableActionEnum> = new EventEmitter<MyTableActionEnum>();
   constructor(private cdr: ChangeDetectorRef) { }
@@ -50,7 +53,7 @@ export class MyTableComponent<T> implements OnInit{
     this.initializeSortStatus();
     this.applyFieldOptions(this.tableConfig.search);
     this.initializeOrUpdatePagination();
-    console.log(this.tableConfig.getHeaders())
+
   }
 
   public performAction(action: MyTableActionEnum, rowData: any): void {
@@ -94,10 +97,29 @@ export class MyTableComponent<T> implements OnInit{
     }
   }
 
-sortTable(column:string){
-  this.column = column;
-}
-
+  sortTable(column: string) {
+    if (this.column === column) {
+      // Se l'header è già selezionato, inverte l'ordine di ordinamento
+      const sortStatus = _.find(this.currentSortStatus, { defaultColumn: column });
+      if (sortStatus) {
+        sortStatus.orderType = sortStatus.orderType === 'asc' ? 'desc' : 'asc';
+      }
+    } else {
+      // Se è selezionato un nuovo header, reimposta lo stato di ordinamento
+      _.forEach(this.currentSortStatus, sortStatus => {
+        if (sortStatus.defaultColumn === column) {
+          sortStatus.orderType = 'asc';
+        } else {
+          sortStatus.orderType = '';
+        }
+      });
+    }
+  
+    this.column = column;
+  }
+  
+  
+  
 
   /*  sortTable(column: string){
     this.currentSortStatus.forEach(element => {
