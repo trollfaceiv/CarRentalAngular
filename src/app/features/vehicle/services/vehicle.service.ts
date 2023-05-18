@@ -10,9 +10,12 @@ import { Vehicle } from '../models/vehicle.model';
 })
 
 
-
 export class VehicleService {
-  vehicleUrl = 'assets/vehicles.json';
+  vehicleUrl = 'http://localhost:3000/vehicles';
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -22,16 +25,32 @@ export class VehicleService {
     .pipe(catchError(this.handleError<Vehicle[]>('getVehicles', [])))
   }
 
+  addVehicle(vehicle: Vehicle): Observable<Vehicle>{
+    return this.http.post<Vehicle>(this.vehicleUrl, vehicle)
+    .pipe(catchError(this.handleError<Vehicle>('addVehicle')))
+  }
+
+  updateVehicle(vehicle: Vehicle): Observable<Vehicle>{
+    return this.http.put<Vehicle>(this.vehicleUrl, vehicle, this.httpOptions)
+    .pipe(catchError(this.handleError<Vehicle>('updateVehicle')))
+  }
+
+  deleteVehicle(id:number): Observable<Vehicle>{
+    const url = `${this.vehicleUrl}/${id}`
+    return this.http.delete<Vehicle>(url, this.httpOptions)
+    .pipe(catchError(this.handleError<Vehicle>('deleteVehicle')))
+  }
+
+  getVehicleById(id: number): Observable<Vehicle>{ 
+    const url = `${this.vehicleUrl}/${id}`
+    return this.http.get<Vehicle>(url).pipe
+    (catchError(this.handleError<Vehicle>('getVehicleById')))
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
-      // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-  
-      // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
-  
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }

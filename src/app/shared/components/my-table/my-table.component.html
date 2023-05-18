@@ -7,7 +7,7 @@
   <input type="text" class="mt-2" #searchBox (keyup)="applyFilter(selectedOption, searchBox.value)">
 </div>
 <ng-container *ngFor="let x of tableConfig.actions">
-  <app-my-button *ngIf="x.type === 0" [buttonConfig]="x.buttonConfig" (click)="performAction(x.type)"> </app-my-button>
+  <app-my-button *ngIf="x.type === 0" [buttonConfig]="x.buttonConfig" (click)="performNewAction(x.type)"> </app-my-button>
   </ng-container>
 
 
@@ -16,10 +16,10 @@
         <th scope="col" *ngFor="let x of tableConfig.headers" (click)="sortTable(x.key)">{{x.label}}</th>
     </thead>
     <tbody>
-        <tr scope="row" *ngFor="let item of sortedData | paginationPipe: itemPerPage : currentPage ; let i = index">
+      <tr scope="row" *ngFor="let item of data | sort: column : currentSortStatus | paginationPipe: itemPerPage : currentPage  ; let i = index">
            <td *ngFor="let x of tableConfig.headers" >{{item[x.key]}}</td>
            <td><ng-container *ngFor="let x of tableConfig.actions">
-            <app-my-button [buttonConfig]="x.buttonConfig" (click)="performAction(x.type)" *ngIf="x.type !== 0"> </app-my-button>
+            <app-my-button [buttonConfig]="x.buttonConfig" (click)="performAction(x.type, item)" *ngIf="x.type !== 0"> </app-my-button>
           </ng-container>
         </td>
         </tr>

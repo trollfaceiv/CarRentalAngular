@@ -31,7 +31,6 @@ export class MyTableConfig<T>{
 
  
     labelToMap(keys: string[], labels: string[]){
-      console.log(Object.entries(_.zipObject(keys,labels)).map(([key,label]) => ({key,label})));
       return Object.entries(_.zipObject(keys,labels)).map(([key,label]) => ({key,label}));    
     }
 

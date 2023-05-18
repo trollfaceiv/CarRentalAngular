@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MyTableConfig } from './my-table.config';
 import * as _ from "lodash";
 
@@ -14,7 +14,7 @@ import { MyTableActionEnum } from './my-table.actionenum';
   templateUrl: './my-table.component.html',
   styleUrls: ['./my-table.component.css'],
 })
-export class MyTableComponent<T> implements OnInit {
+export class MyTableComponent<T> implements OnInit{
 
 
   @Input() tableConfig!: MyTableConfig<T>;
@@ -26,6 +26,7 @@ export class MyTableComponent<T> implements OnInit {
 
   sortedData = this.data;
   currentSortStatus!: MyOrder[];
+  column!: string;
 
   selectedOption!: string;
   searchResult! : any[];
@@ -37,24 +38,32 @@ export class MyTableComponent<T> implements OnInit {
   pageSize!: number;
   pagesOptions: number[] = [];
 
+  @Output() performActionEmitter: EventEmitter<{ action: MyTableActionEnum; rowData: any }> = new EventEmitter<{ action: MyTableActionEnum; rowData: any }>();
+  @Output() performNewActionEmitter: EventEmitter<MyTableActionEnum> = new EventEmitter<MyTableActionEnum>();
   constructor(private cdr: ChangeDetectorRef) { }
+  
+
   
   ngOnInit(): void {
     this.sortedData = this.data;
+    console.log(this.data);
     this.initializeSortStatus();
     this.applyFieldOptions(this.tableConfig.search);
     this.initializeOrUpdatePagination();
     console.log(this.tableConfig.getHeaders())
   }
 
-  public performAction(action: MyTableActionEnum ) {
-        if(action === MyTableActionEnum.DELETE)
-          console.log('cancellazione effetuata');
-        if(action === MyTableActionEnum.EDIT)
-          console.log('modifica effettuata');
-        if(action === MyTableActionEnum.NEW_ROW)
-          console.log('aggiunta effettuata');
-    }
+  public performAction(action: MyTableActionEnum, rowData: any): void {
+    console.log("È stato premuto il bottone " + action);
+    console.log("è stato passato" + rowData);
+    this.performActionEmitter.emit({ action, rowData });
+  }
+  
+  public performNewAction(action: MyTableActionEnum): void {
+    console.log("È stato premuto il bottone " + action);
+    this.performNewActionEmitter.emit(action);
+  }
+  
   
 
   public changePage(page: number) {
@@ -85,7 +94,12 @@ export class MyTableComponent<T> implements OnInit {
     }
   }
 
-  sortTable(column: string){
+sortTable(column:string){
+  this.column = column;
+}
+
+
+  /*  sortTable(column: string){
     this.currentSortStatus.forEach(element => {
       if(element.defaultColumn === column){
         if(element.orderType === '' || element.orderType ==='asc'){
@@ -100,7 +114,7 @@ export class MyTableComponent<T> implements OnInit {
       }
     });
     this.cdr.detectChanges();
-  }
+  }  */
 
 
   applyFieldOptions(searchFields : MySearch){

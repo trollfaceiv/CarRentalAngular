@@ -1,0 +1,74 @@
+{
+  "vehicles": [
+    {
+      "id": 10,
+      "factory": "Lamborghini",
+      "model": "Huracan",
+      "plateDate": "2022-08-12T00:00:00.000Z",
+      "plateNumber": "KL890MN"
+    },
+    {
+      "id": 12,
+      "factory": "Volvo",
+      "model": "XC60",
+      "plateDate": "2022-07-20T00:00:00.000Z",
+      "plateNumber": "ST456UV"
+    },
+    {
+      "id": 13,
+      "factory": "Subaru",
+      "model": "Impreza",
+      "plateDate": "2022-09-01T00:00:00.000Z",
+      "plateNumber": "WX567YZ"
+    },
+    {
+      "id": 17,
+      "factory": "Hyundai",
+      "model": "Elantra",
+      "plateDate": "2022-12-25T00:00:00.000Z",
+      "plateNumber": "MN345OP"
+    },
+    {
+      "id": 18,
+      "factory": "Lexus",
+      "model": "RX",
+      "plateDate": "2022-08-05T00:00:00.000Z",
+      "plateNumber": "QR678ST"
+    },
+    {
+      "id": 19,
+      "factory": "Chevrolet",
+      "model": "Equinox",
+      "plateDate": "2022-11-18T00:00:00.000Z",
+      "plateNumber": "UV901WX"
+    },
+    {
+      "id": 20,
+      "factory": "BMW",
+      "model": "3 Series",
+      "plateDate": "2022-10-01T00:00:00.000Z",
+      "plateNumber": "YZ234AB"
+    },
+    {
+      "id": 21,
+      "factory": "Tesla",
+      "model": "Model 3",
+      "plateDate": "2022-09-15T00:00:00.000Z",
+      "plateNumber": "CD567EF"
+    },
+    {
+      "id": 23,
+      "factory": "Ford",
+      "model": "Escape",
+      "plateDate": "2022-12-20T00:00:00.000Z",
+      "plateNumber": "KL012MN"
+    },
+    {
+      "id": 24,
+      "factory": "Mercedes-Benz",
+      "model": "E-Class",
+      "plateDate": "2022-10-05T00:00:00.000Z",
+      "plateNumber": "OP345QR"
+    }
+  ]
+}
