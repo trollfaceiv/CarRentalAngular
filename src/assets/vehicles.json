@@ -1,0 +1,120 @@
+[
+    {
+        "id": 1,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },  {
+        "id": 2,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },    {
+        "id": 3,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },    {
+        "id": 4,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },    {
+        "id": 5,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },    {
+        "id": 6,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },    {
+        "id": 7,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },    {
+        "id": 8,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },    {
+        "id": 9,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 10,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-01T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 11,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 12,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 13,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 14,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 15,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 16,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 17,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    },
+    {
+        "id": 18,
+        "factory": "Fiat",
+        "model": "Panda",
+        "plateDate": "2022-01-02T00:00:00.000Z",
+        "plateNumber": "AB123CD"
+    }
+]
