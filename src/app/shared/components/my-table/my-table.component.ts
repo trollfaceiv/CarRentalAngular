@@ -120,23 +120,6 @@ export class MyTableComponent<T> implements OnInit{
   
   
 
-  /*  sortTable(column: string){
-    this.currentSortStatus.forEach(element => {
-      if(element.defaultColumn === column){
-        if(element.orderType === '' || element.orderType ==='asc'){
-          this.sortedData = _.sortBy(this.sortedData,column);
-          element.orderType = 'desc';
-        }
-        else if(element.orderType === 'desc'){
-        this.sortedData = _.sortBy(this.sortedData,column).reverse();
-        element.orderType = 'asc';
-        }
-
-      }
-    });
-    this.cdr.detectChanges();
-  }  */
-
 
   applyFieldOptions(searchFields : MySearch){
     let keysOfLabels: MyHeaders[] = [];
@@ -147,14 +130,6 @@ export class MyTableComponent<T> implements OnInit{
     this.fieldOptions = keysOfLabels;
   }
   
-/* applyFilter(column: string, filterValue: string) {
-  filterValue = filterValue.trim().toLowerCase();
-    this.data = this.sortedData.filter(entity =>
-      entity[column].toString().toLowerCase().includes(filterValue) 
-    );
-    this.cdr.detectChanges();
-
-  } */
 
   getSearchValue(column: string, filterValue: string){
     this.filterValue = filterValue;
