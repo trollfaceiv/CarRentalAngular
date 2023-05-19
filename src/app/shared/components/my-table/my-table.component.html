@@ -4,7 +4,7 @@
   <select class="mr-3 mt-2 form-select" [(ngModel)] = "selectedOption" name="opzioni">
     <option value ="{{x.key}}" *ngFor="let x of fieldOptions">{{x.label}}</option>
   </select>
-  <input type="text" class="mt-2" #searchBox (keyup)="applyFilter(selectedOption, searchBox.value)">
+  <input type="text" class="mt-2" #searchBox (keyup)="getSearchValue(selectedOption, searchBox.value)">
 </div>
 <ng-container *ngFor="let x of tableConfig.actions">
   <app-my-button *ngIf="x.type === 0" [buttonConfig]="x.buttonConfig" (click)="performNewAction(x.type)"> </app-my-button>
@@ -16,7 +16,7 @@
         <th scope="col" *ngFor="let x of tableConfig.headers" (click)="sortTable(x.key)">{{x.label}}</th>
     </thead>
     <tbody>
-      <tr scope="row" *ngFor="let item of data | sort: column : currentSortStatus : itemPerPage : currentPage; let i = index">
+      <tr scope="row" *ngFor="let item of data | sort: column : currentSortStatus : itemPerPage : currentPage : filterValue :selectedOption; let i = index">
         <td *ngFor="let x of tableConfig.headers" >{{item[x.key]}}</td>
            <td><ng-container *ngFor="let x of tableConfig.actions">
             <app-my-button [buttonConfig]="x.buttonConfig" (click)="performAction(x.type, item)" *ngIf="x.type !== 0"> </app-my-button>

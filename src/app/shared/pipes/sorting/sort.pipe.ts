@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 })
 export class SortAndPaginatePipe implements PipeTransform {
   counter = 0;
-  transform(value: any[], column: string, currentSortStatus: any[], pageSize: number, currentPage: number): any[] {
+  transform(value: any[], column: string, currentSortStatus: any[], pageSize: number, currentPage: number, filterValue: string, selectedOption:string): any[] {
     let sortedData = _.cloneDeep(value);
     // Applica l'ordinamento
     currentSortStatus.forEach(element => {
@@ -24,8 +24,17 @@ export class SortAndPaginatePipe implements PipeTransform {
     // Applica la paginazione
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    this.counter++;
-    console.log(sortedData.slice(startIndex, endIndex))
+
+    // Applica il filtro
+    if(filterValue){
+    filterValue = filterValue.trim().toLowerCase();
+    sortedData = value.filter(entity =>
+      entity[selectedOption].toString().toLowerCase().includes(filterValue));
+    }
     return sortedData.slice(startIndex, endIndex);
   }
+
+
+
+  
 }

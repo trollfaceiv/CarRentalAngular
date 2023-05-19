@@ -22,7 +22,7 @@ export class MyTableComponent<T> implements OnInit{
 
   fieldOptions!: MyHeaders[];
   selectedData:any;
-
+  filterValue!: string;
 
   sortedData = this.data;
   currentSortStatus!: MyOrder[];
@@ -80,11 +80,10 @@ export class MyTableComponent<T> implements OnInit{
     this.pages = Array.from({ length: this.pageNumber }, (_, i) => i + 1);
     this.currentPage = 1;
   }
-
+  
   changePagination(pageConfig: number){
     this.itemPerPage = pageConfig;
     this.initializeOrUpdatePagination();
-    console.log(this.itemPerPage);
   }
 
   initializeSortStatus(){
@@ -145,22 +144,32 @@ export class MyTableComponent<T> implements OnInit{
       let header = <MyHeaders> (_.find(this.tableConfig.getHeaders(),{'label':element}));
       keysOfLabels.push(header);
     });
-    console.log(keysOfLabels);
     this.fieldOptions = keysOfLabels;
   }
   
-  applyFilter(column: string, filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-
-    (this.sortedData = this.data.filter(entity =>{
-      return entity[column].toString().toLowerCase().includes(filterValue)
-    }));
+/* applyFilter(column: string, filterValue: string) {
+  filterValue = filterValue.trim().toLowerCase();
+    this.data = this.sortedData.filter(entity =>
+      entity[column].toString().toLowerCase().includes(filterValue) 
+    );
     this.cdr.detectChanges();
 
-    
+  } */
+
+  getSearchValue(column: string, filterValue: string){
+    this.filterValue = filterValue;
+    filterValue = filterValue.trim().toLowerCase();
+    this.data = this.sortedData.filter(entity =>
+      entity[column].toString().toLowerCase().includes(filterValue),
+    );
+    this.pageNumber = Math.ceil(this.data.length/this.itemPerPage)
+    this.pages = Array.from({ length: this.pageNumber }, (_, i) => i + 1);
+    console.log(this.pageNumber);
+    }
   }
-}
+  
+
+
 
 
 
