@@ -19,7 +19,7 @@ export class VehicleService {
 
   constructor(private http: HttpClient) { }
 
-
+  
   getVehicles(): Observable<Vehicle[]>{
     return this.http.get<Vehicle[]>(this.vehicleUrl)
     .pipe(catchError(this.handleError<Vehicle[]>('getVehicles', [])))
@@ -31,7 +31,9 @@ export class VehicleService {
   }
 
   updateVehicle(vehicle: Vehicle): Observable<Vehicle>{
-    return this.http.put<Vehicle>(this.vehicleUrl, vehicle, this.httpOptions)
+    const id = vehicle.id;
+    const url = `${this.vehicleUrl}/${id}`
+    return this.http.put<Vehicle>(url, vehicle, this.httpOptions)
     .pipe(catchError(this.handleError<Vehicle>('updateVehicle')))
   }
 

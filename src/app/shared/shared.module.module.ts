@@ -24,6 +24,7 @@ import { SortAndPaginatePipe } from './pipes/sorting/sort.pipe';
   exports: [
     AppHeaderComponent,
     MyTableComponent,
+    MyButtonComponent
   ]
 })
 export class SharedModuleModule { }

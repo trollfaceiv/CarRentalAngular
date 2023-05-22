@@ -3,23 +3,33 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
 import { SharedModuleModule } from './shared/shared.module.module';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { VehicleModule } from './features/vehicle/vehicle.module';
 import { HttpClientModule } from '@angular/common/http';
+import { UserListComponent } from './features/user/components/user-list/user-list.component';
+import { UserInfoComponent } from './features/user/components/user-info/user-info.component';
+import { LoginComponent } from './core/components/login/login.component';
+import { AuthGuard } from './core/services/auth.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
+    UserListComponent,
+    UserInfoComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModuleModule,
     VehicleModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

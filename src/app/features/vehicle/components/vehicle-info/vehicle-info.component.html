@@ -1,7 +1,8 @@
 <app-my-table *ngIf="vehicleArray"
   [tableConfig]="vehicleTabHeaders"
   [data]="vehicleArray"
-  (performActionEmitter)="handlePerformedAction($event)">
+  (performActionEmitter)="handlePerformedAction($event)"
+  (performNewActionEmitter)="handleNewPerformedAction($event)">
 </app-my-table>
 <p class ="text-white" *ngFor="let x of vehicleArray">{{x.model}}</p>
 

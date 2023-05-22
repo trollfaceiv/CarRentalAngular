@@ -1,19 +1,15 @@
-{
+{ "users":[
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "deded@gmail.com",
+      "password": "123456",
+      "role": "admin",
+      "dateOfBirth" : "1990-01-01T00:00:00.000Z"
+    }
+],
   "vehicles": [
-    {
-      "id": 3,
-      "factory": "Toyota",
-      "model": "Camry",
-      "plateDate": "2022-05-10T00:00:00.000Z",
-      "plateNumber": "IJ789KL"
-    },
-    {
-      "id": 4,
-      "factory": "Ford",
-      "model": "Mustang",
-      "plateDate": "2022-03-20T00:00:00.000Z",
-      "plateNumber": "MN012OP"
-    },
     {
       "id": 5,
       "factory": "Mercedes-Benz",
@@ -30,7 +26,7 @@
     },
     {
       "id": 7,
-      "factory": "Honda",
+      "factory": "Hondaaa",
       "model": "Accord",
       "plateDate": "2022-09-25T00:00:00.000Z",
       "plateNumber": "YZ901AB"
@@ -51,8 +47,8 @@
     },
     {
       "id": 12,
-      "factory": "Volvo",
-      "model": "XC60",
+      "factory": "Volvoaaaa",
+      "model": "XC60aqweqweqw",
       "plateDate": "2022-07-20T00:00:00.000Z",
       "plateNumber": "ST456UV"
     },

@@ -4,6 +4,7 @@ import { MyTableConfig } from 'src/app/shared/components/my-table/my-table.confi
 import { MyTableActionEnum } from 'src/app/shared/components/my-table/my-table.actionenum';
 import { VehicleService } from '../../services/vehicle.service';
 import { MyHeaders } from 'src/app/shared/components/my-table/my-table.headers';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,10 +16,10 @@ import { MyHeaders } from 'src/app/shared/components/my-table/my-table.headers';
 
 export class VehicleInfoComponent implements OnInit {
 
-  constructor(private vehicleService: VehicleService, private cdr: ChangeDetectorRef) { }
+  constructor(private vehicleService: VehicleService, private cdr: ChangeDetectorRef, private router: Router) { }
 
-   vehicleArray!: Vehicle[];
-   vehicleTabHeaders: MyTableConfig<Vehicle> = new MyTableConfig(
+  vehicleArray!: Vehicle[];
+  vehicleTabHeaders: MyTableConfig<Vehicle> = new MyTableConfig(
     ['Id', 'Casa madre', 'Modello', 'Data di Immatricolazione', 'Numero di targa'],
     Vehicle,
     { defaultColumn: 'id', orderType: 'asc' },
@@ -29,39 +30,42 @@ export class VehicleInfoComponent implements OnInit {
     { type: MyTableActionEnum.NEW_ROW, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Aggiungi riga', image: '' } }]);
 
 
-     ngOnInit():void {     
-      
+  ngOnInit(): void {
+
     this.getVehicles();
 
   }
-  
 
-  
-      
-    handlePerformedAction(action: { action: MyTableActionEnum; rowData: any }) {
-      if (action.action === MyTableActionEnum.NEW_ROW) {
-        console.log('Premuto il bottone "NEW_ROW"');
-      } else if (action.action === MyTableActionEnum.EDIT) {
-        console.log('Premuto il bottone "EDIT"');
-      } else if (action.action === MyTableActionEnum.DELETE) {
-        this.deleteVehicles(action.rowData);
-      }
-    }
-    
-    
-    
-    
-    getVehicles() {
-      this.vehicleService.getVehicles().subscribe((vehicles: Vehicle[]) => {
-        this.vehicleArray = vehicles;
-      });
-    }
-    
 
-    deleteVehicles(vehicle: Vehicle){
-      this.vehicleArray = this.vehicleArray.filter(v => v.id !== vehicle.id);
-      this.vehicleService.deleteVehicle(vehicle.id).subscribe((response) => {
-        console.log("get vehicles fatta");
-      });
+  handleNewPerformedAction(action: MyTableActionEnum) {
+    if (action === MyTableActionEnum.NEW_ROW) {
+      this.router.navigate(['/edit-vehicle']);
     }
+  }
+
+  handlePerformedAction(action: { action: MyTableActionEnum; rowData: any }) {
+    if (action.action === MyTableActionEnum.EDIT) {
+      const vehicleId = action.rowData.id;
+      this.router.navigate(['/edit-vehicle/' + vehicleId]);
+    } else if (action.action === MyTableActionEnum.DELETE) {
+      this.deleteVehicles(action.rowData);
+    }
+  }
+
+
+
+
+  getVehicles() {
+    this.vehicleService.getVehicles().subscribe((vehicles: Vehicle[]) => {
+      this.vehicleArray = vehicles;
+    });
+  }
+
+
+  deleteVehicles(vehicle: Vehicle) {
+    this.vehicleArray = this.vehicleArray.filter(v => v.id !== vehicle.id);
+    this.vehicleService.deleteVehicle(vehicle.id).subscribe((response) => {
+      console.log("get vehicles fatta");
+    });
+  }
 }
