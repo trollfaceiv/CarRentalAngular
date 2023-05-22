@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { User } from 'src/app/features/user/models/user';
 
@@ -8,8 +8,6 @@ import { User } from 'src/app/features/user/models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedInUser$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
-
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<boolean> {
@@ -18,26 +16,35 @@ export class AuthService {
       .pipe(
         tap((users: User[]) => {
           if (users.length === 1) {
-            this.loggedInUser$.next(users[0]);
+            localStorage.setItem('loggedInUser', JSON.stringify(users[0]));
           }
         }),
-        map((users: User[]) => users.length === 1) // Restituisce true se l'autenticazione è avvenuta con successo, altrimenti false
+        map((users: User[]) => users.length === 1)
       );
   }
 
-  getUserLogged(): Observable<User | null> {
-    return this.loggedInUser$.asObservable();
+  logout(): void {
+    localStorage.removeItem('loggedInUser');
+    if(this.getUserLogged() === null){
+      console.log("Logout effettuato");
+    }
+    else{
+      console.log("Logout fallito");
+    }
+  }
+
+  
+  getUserLogged(): User | null {
+    const savedUser = localStorage.getItem('loggedInUser');
+    return savedUser ? JSON.parse(savedUser) : null;
   }
 
   isLogged(): boolean {
-    return this.loggedInUser$.value !== null;
+    return localStorage.getItem('loggedInUser') !== null;
   }
 
   isAdmin(): boolean {
-    const user = this.loggedInUser$.value;
-    if (user && user.role === 'admin') {
-      return true;
-    }
-    return false;
+    const user = this.getUserLogged();
+    return user?.role === 'admin';
   }
 }

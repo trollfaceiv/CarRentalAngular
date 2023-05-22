@@ -13,7 +13,7 @@ import { User } from 'src/app/features/user/models/user';
 })
 export class LoginComponent {
   constructor(private _http: HttpClient, private _route: Router, private authService: AuthService) { }
-  userLogged!: User;
+  userLogged: User | null = null;
   email!: string;
   password!: string;
   
@@ -21,12 +21,8 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe((result: boolean) => {
       if (result) {
         console.log("Login effettuato");
-        this.authService.getUserLogged().subscribe((user: User | null) => {
-          if (user) {
-            this.userLogged = user;
-            console.log(this.userLogged);
-          }
-        });
+        this.userLogged = this.authService.getUserLogged();
+        console.log(this.userLogged);
       } else {
         console.log("Login fallito");
       }
