@@ -6,16 +6,17 @@ export class Rent{
     id!: number;
     startDate!: Date;
     endDate!: Date;
-    car!: Vehicle;
-    user!: User;
-    approved!: boolean;
+    car!: string;
+    user!: string;
+    approved!: string;
 
-    constructor(id:number, startDate:Date, endDate:Date, car:Vehicle, user:User){
+
+    constructor(id:number, startDate:Date, endDate:Date, car:string, user:string){
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.car = car;
         this.user = user;
-        this.approved = false;
+        this.approved = 'In attesa';
     }
 }

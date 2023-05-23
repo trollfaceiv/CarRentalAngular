@@ -48,7 +48,9 @@ export class NewRentComponent implements OnInit {
   }
 
   createRent() {
-    const newRent = new Rent(0, this.startDate, this.endDate, this.selectedVehicle, this.selectedUser);
+    const plateNumber = this.selectedVehicle.plateNumber;
+    const email = this.selectedUser.email;
+    const newRent = new Rent(0, this.startDate, this.endDate, plateNumber, email);
     this.rentService.addRent(newRent).subscribe((rent: Rent) => {
       console.log(rent);
     });

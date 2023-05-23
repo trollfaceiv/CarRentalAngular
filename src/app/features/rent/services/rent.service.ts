@@ -27,6 +27,24 @@ export class RentService {
       .pipe(catchError(this.handleError<Rent>('addRent')))
   }
 
+  deleteRent(id:number): Observable<Rent>{
+    const url = `${this.rentUrl}/${id}`
+    return this.http.delete<Rent>(url, this.httpOptions)
+    .pipe(catchError(this.handleError<Rent>('deleteRent')))
+  }
+
+  getRentById(id: number): Observable<Rent> {
+    const url = `${this.rentUrl}/${id}`
+    return this.http.get<Rent>(url).pipe
+      (catchError(this.handleError<Rent>('getRentById')))
+  }
+
+  updateRent(rent: Rent): Observable<Rent>{
+    const id = rent.id;
+    const url = `${this.rentUrl}/${id}`
+    return this.http.put<Rent>(url, rent, this.httpOptions)
+    .pipe(catchError(this.handleError<Rent>('updateRent')))
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

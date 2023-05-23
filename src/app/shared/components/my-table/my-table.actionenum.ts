@@ -1,3 +1,3 @@
 export enum MyTableActionEnum {
-        NEW_ROW , EDIT , DELETE, RENT
+        NEW_ROW , EDIT , DELETE, RENT, APPROVE, REJECT
      }

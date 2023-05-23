@@ -53,6 +53,7 @@ export class MyTableComponent<T> implements OnInit{
     this.initializeSortStatus();
     this.applyFieldOptions(this.tableConfig.search);
     this.initializeOrUpdatePagination();
+    console.log(this.data.length);
 
   }
 

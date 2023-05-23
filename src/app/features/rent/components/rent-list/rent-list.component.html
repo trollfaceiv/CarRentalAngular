@@ -1,1 +1,22 @@
-<p>rent-list works!</p>
+
+<button class="btn btn-warning mt-3 mb-3" (click)="toggleTable()">
+  Mostra {{ showFilteredTable ? 'i noleggi in sospeso' : 'noleggi approvati/rifiutati' }}
+</button>
+
+<ng-container *ngIf="!showFilteredTable">
+<app-my-table *ngIf="rentArray"
+  [tableConfig]="rentTabHeaders"
+  [data]="rentArray"
+  (performActionEmitter)="handlePerformedAction($event)"
+></app-my-table>
+</ng-container>
+
+
+<ng-container *ngIf="showFilteredTable">
+<app-my-table *ngIf="rentFilteredArray"
+  [tableConfig]="rentFilteredTable"
+  [data]="rentFilteredArray"
+  (performActionEmitter)="handlePerformedAction($event)"
+  ></app-my-table>
+</ng-container>
+

@@ -10,52 +10,7 @@
       "dateOfBirth": "1990-01-01T00:00:00.000Z"
     }
   ],
-  "rents": [
-    {
-      "id": 3,
-      "startDate": "2023-05-05",
-      "endDate": "2023-05-07",
-      "car": {
-        "id": 6,
-        "factory": "Chevrolet",
-        "model": "Camaro",
-        "plateDate": "2022-07-08T00:00:00.000Z",
-        "plateNumber": "UV678WX"
-      },
-      "user": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "deded@gmail.com",
-        "password": "123456",
-        "role": "admin",
-        "dateOfBirth": "1990-01-01T00:00:00.000Z"
-      },
-      "approved": false
-    },
-    {
-      "id": 4,
-      "startDate": "2023-05-03",
-      "endDate": "2023-05-14",
-      "car": {
-        "id": 11,
-        "factory": "Nissan",
-        "model": "Altima",
-        "plateDate": "2022-10-05T00:00:00.000Z",
-        "plateNumber": "OP123QR"
-      },
-      "user": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "deded@gmail.com",
-        "password": "123456",
-        "role": "admin",
-        "dateOfBirth": "1990-01-01T00:00:00.000Z"
-      },
-      "approved": false
-    }
-  ],
+  "rents": [],
   "vehicles": [
     {
       "id": 6,

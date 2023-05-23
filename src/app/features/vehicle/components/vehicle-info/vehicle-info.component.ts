@@ -65,6 +65,7 @@ export class VehicleInfoComponent implements OnInit {
     });
   }
 
+  
 
   deleteVehicles(vehicle: Vehicle) {
     this.vehicleArray = this.vehicleArray.filter(v => v.id !== vehicle.id);
