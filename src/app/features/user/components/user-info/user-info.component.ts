@@ -7,6 +7,10 @@ import { HeaderExtractorService } from 'src/app/shared/services/header-extractor
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { MyButtonConfig } from 'src/app/shared/components/my-button/my-button.config';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { MyTableConfig } from 'src/app/shared/components/my-table/my-table.config';
+import { Rent } from 'src/app/features/rent/models/rent';
+import { RentService } from 'src/app/features/rent/services/rent.service';
 
 @Component({
   selector: 'app-user-info',
@@ -21,21 +25,44 @@ export class UserInfoComponent {
     private userService: UserService,
     private route: ActivatedRoute,
     private headerService: HeaderExtractorService,
-    private router: Router) { }
+    private authService: AuthService,
+    private router: Router,
+    private rentService: RentService) { }
    
   selectedUser!: User;
   attributes!: MyHeaders[];
   mockUser: User = new User();
+  isAdmin = this.authService.isAdmin();
+  rentArray!: Rent[];
   
+  rentUserTabHeaders: MyTableConfig<Rent> = new MyTableConfig(
+    ['Id', "Data di inizio noleggio", 'Data di fine noleggio', 'Targa veicolo', 'Email utente','Stato: '],
+    Rent,
+    { defaultColumn: 'id', orderType: 'asc' },
+    { columns: ['Targa veicolo'] },
+    { itemPerPage: 5, itemPerPageOptions: [5, 10, 20, 50] },
+    [] 
+);
+
   ngOnInit(): void {
     if(!this.exist()){
       this.selectedUser = new User();
     }
-    else{this.getSelectedUser();
+    else{this.getSelectedUser()
     }
     this.getAttributes();
+ 
+    
+ 
   }
 
+  getRents(){
+    this.rentService.getRentByEmail(this.selectedUser.email).subscribe((rents: Rent[]) => {
+      this.rentArray = rents;
+      console.log(this.rentArray)
+    });
+  }
+  
   exist(){
     return Number(this.route.snapshot.paramMap.get('id'));
   }
@@ -47,7 +74,9 @@ export class UserInfoComponent {
   getSelectedUser() {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
     this.userService.getUserById(userId)
-      .subscribe((user: User) => { this.selectedUser = user });
+      .subscribe((user: User) => {
+         this.selectedUser = user 
+         this.getRents();});
   }
 
   updateUser(){

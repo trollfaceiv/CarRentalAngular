@@ -38,7 +38,12 @@ export class RentService {
     return this.http.get<Rent>(url).pipe
       (catchError(this.handleError<Rent>('getRentById')))
   }
-
+  
+  getRentByEmail(email: string): Observable<Rent[]> {
+    const url = `${this.rentUrl}?user=${email}`
+    return this.http.get<Rent[]>(url).pipe
+      (catchError(this.handleError<Rent[]>('getRentByEmail', [])))
+  }
   updateRent(rent: Rent): Observable<Rent>{
     const id = rent.id;
     const url = `${this.rentUrl}/${id}`

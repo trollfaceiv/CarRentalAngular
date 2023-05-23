@@ -20,15 +20,24 @@
     },
     {
       "id": 3,
-      "firstName": "",
-      "lastName": "",
+      "firstName": "pinc",
+      "lastName": "pinc",
       "email": "b",
       "password": "b",
       "role": "asdasd",
       "dateOfBirth": "2023-05-23"
     }
   ],
-  "rents": [],
+  "rents": [
+    {
+      "id": 1,
+      "startDate": "2023-05-12",
+      "endDate": "2023-05-21",
+      "car": "UV678WX",
+      "user": "b",
+      "approved": "In attesa"
+    }
+  ],
   "vehicles": [
     {
       "id": 6,

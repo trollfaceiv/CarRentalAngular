@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   { path: 'user-list', component:UserListComponent, canActivate: [RoleGuard]},
-  { path: 'user-info/:id', component: UserInfoComponent, canActivate: [RoleGuard] },
+  { path: 'user-info/:id', component: UserInfoComponent, canActivate: [AuthGuard] },
   { path: 'user-info', component: UserInfoComponent, canActivate: [RoleGuard]}
 ]; // sets up routes constant where you define your routes
 

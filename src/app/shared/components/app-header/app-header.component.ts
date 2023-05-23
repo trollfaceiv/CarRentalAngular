@@ -28,5 +28,6 @@ export class AppHeaderComponent implements OnInit {
       location.reload();
     });
   }
+
   
 }
