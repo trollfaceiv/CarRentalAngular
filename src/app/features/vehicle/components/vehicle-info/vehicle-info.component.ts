@@ -27,7 +27,8 @@ export class VehicleInfoComponent implements OnInit {
     { itemPerPage: 5, itemPerPageOptions: [5, 10, 20, 50] },
     [{ type: MyTableActionEnum.DELETE, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Elimina', image: '' } },
     { type: MyTableActionEnum.EDIT, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Modifica', image: '' } },
-    { type: MyTableActionEnum.NEW_ROW, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Aggiungi riga', image: '' } }]);
+    { type: MyTableActionEnum.NEW_ROW, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Aggiungi riga', image: '' } },
+    { type: MyTableActionEnum.RENT, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Noleggia', image: '' } }]);
 
 
   ngOnInit(): void {
@@ -49,6 +50,9 @@ export class VehicleInfoComponent implements OnInit {
       this.router.navigate(['/edit-vehicle/' + vehicleId]);
     } else if (action.action === MyTableActionEnum.DELETE) {
       this.deleteVehicles(action.rowData);
+    }
+    else if (action.action === MyTableActionEnum.RENT){
+      this.router.navigate(['/rent-vehicle/' + action.rowData.id]);
     }
   }
 

@@ -5,12 +5,14 @@ import { NewVehicleComponent } from './features/vehicle/components/new-vehicle/n
 import { LoginComponent } from './core/components/login/login.component';
 import { AuthGuard } from './core/services/auth.guard';
 import { RoleGuard } from './core/services/role.guard';
+import { NewRentComponent } from './features/rent/components/new-rent/new-rent.component';
 
 const routes: Routes = [
   { path: 'vehicle-info', component: VehicleInfoComponent },
   { path: 'edit-vehicle/:id', component: NewVehicleComponent },
   { path: 'edit-vehicle', component: NewVehicleComponent, canActivate: [RoleGuard] },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent }, 
+  { path: 'rent-vehicle/:id', component: NewRentComponent }
 ]; // sets up routes constant where you define your routes
 
 // configures NgModule imports and exports

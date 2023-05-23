@@ -12,6 +12,8 @@ import { UserListComponent } from './features/user/components/user-list/user-lis
 import { UserInfoComponent } from './features/user/components/user-info/user-info.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { AuthGuard } from './core/services/auth.guard';
+import { NewRentComponent } from './features/rent/components/new-rent/new-rent.component';
+import { RentListComponent } from './features/rent/components/rent-list/rent-list.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { AuthGuard } from './core/services/auth.guard';
     UserListComponent,
     UserInfoComponent,
     LoginComponent,
+    NewRentComponent,
+    RentListComponent,
   ],
   imports: [
     BrowserModule,
