@@ -8,6 +8,8 @@ import { RoleGuard } from './core/services/role.guard';
 import { NewRentComponent } from './features/rent/components/new-rent/new-rent.component';
 import { RentListComponent } from './features/rent/components/rent-list/rent-list.component';
 import { DashboardComponent } from './core/components/dashboard/dashboard.component';
+import { UserListComponent } from './features/user/components/user-list/user-list.component';
+import { UserInfoComponent } from './features/user/components/user-info/user-info.component';
 
 const routes: Routes = [
   { path: 'vehicle-info', component: VehicleInfoComponent },
@@ -18,6 +20,9 @@ const routes: Routes = [
   { path: 'show-rents', component: RentListComponent, canActivate: [RoleGuard] },
   { path: 'dashboard', component: DashboardComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  { path: 'user-list', component:UserListComponent, canActivate: [RoleGuard]},
+  { path: 'user-info/:id', component: UserInfoComponent, canActivate: [RoleGuard] },
+  { path: 'user-info', component: UserInfoComponent, canActivate: [RoleGuard]}
 ]; // sets up routes constant where you define your routes
 
 // configures NgModule imports and exports

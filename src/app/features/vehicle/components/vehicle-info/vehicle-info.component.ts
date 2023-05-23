@@ -6,6 +6,7 @@ import { VehicleService } from '../../services/vehicle.service';
 import { MyHeaders } from 'src/app/shared/components/my-table/my-table.headers';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { MyButtonConfig } from 'src/app/shared/components/my-button/my-button.config';
 
 
 @Component({

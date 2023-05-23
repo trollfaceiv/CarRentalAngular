@@ -3,20 +3,29 @@
     {
       "id": 1,
       "firstName": "John",
-      "lastName": "Doe",
-      "email": "deded@gmail.com",
-      "password": "123456",
+      "lastName": "Doex",
+      "email": "admin",
+      "password": "admin",
       "role": "admin",
       "dateOfBirth": "1990-01-01T00:00:00.000Z"
     },
     {
       "id": 2,
-      "firstName": "John",
-      "lastName": "Doe",
-      "email": "a",
-      "password": "a",
-      "role": "user",
-      "dateOfBirth": "1990-01-01T00:00:00.000Z"
+      "firstName": "Gennaro",
+      "lastName": "rUSSO",
+      "email": "A",
+      "password": "A",
+      "role": "admin",
+      "dateOfBirth": "2019-05-23"
+    },
+    {
+      "id": 3,
+      "firstName": "",
+      "lastName": "",
+      "email": "b",
+      "password": "b",
+      "role": "asdasd",
+      "dateOfBirth": "2023-05-23"
     }
   ],
   "rents": [],

@@ -14,6 +14,7 @@ export class MyTableConfig<T>{
     actions!: MyAction[];
 
     public getHeaders(){
+      console.log(this.headers);
       return this.headers;
     }
 

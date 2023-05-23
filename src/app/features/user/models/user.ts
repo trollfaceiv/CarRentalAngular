@@ -1,4 +1,5 @@
 export class User{
+    [key: string]: any;
     id!: number;
     firstName!: string;
     lastName!: string;

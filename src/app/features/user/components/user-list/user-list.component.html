@@ -1,1 +1,6 @@
-<p>user-list works!</p>
+<app-my-table *ngIf="usersArray"
+  [tableConfig]="usersTabHeaders"
+  [data]="usersArray"
+  (performActionEmitter)="handlePerformedAction($event)"
+  (performNewActionEmitter)="handleNewPerformedAction($event)">
+</app-my-table>

@@ -1,1 +1,24 @@
-<p>user-info works!</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <ng-container *ngFor="let x of attributes">
+        <ng-container *ngIf="x.key !== 'id'">
+          <div class="form-group">
+            <ng-container *ngIf="x.key !== 'dateOfBirth'">
+              <label class="text-white" for="{{ x.key }}">{{ x.label }}:</label>
+              <input class="form-control" id="{{ x.key }}" [(ngModel)]="selectedUser[x.key]"
+                placeholder="{{ x.label }}">
+            </ng-container>
+            <ng-container *ngIf="x.key === 'dateOfBirth'">
+              <label class="text-white" for="{{ x.key }}">{{ x.label }}:</label>
+              <input type="date" class="form-control" id="{{ x.key }}" [(ngModel)]="selectedUser[x.key]"
+                placeholder="{{ x.label }}">
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+      <app-my-button *ngIf="selectedUser.id === 0" [buttonConfig]="saveButton" (click)="saveUser()" />
+      <app-my-button *ngIf="selectedUser.id !== 0" [buttonConfig]="sendButton" (click)="updateUser()" />
+    </div>
+  </div>
+</div>
