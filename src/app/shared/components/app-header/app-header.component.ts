@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -9,14 +10,23 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 
 
-export class AppHeaderComponent {
+export class AppHeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+    private route: Router) { }
 
+  ngOnInit(): void {
+    this.isAdmin = this.authService.isAdmin();
+  }
 
+  isAdmin = false;
   loggedUser? = this.authService.getUserLogged();
 
   logout(){
     this.authService.logout();
+    this.route.navigate(['']).then(() => {
+      location.reload();
+    });
   }
+  
 }

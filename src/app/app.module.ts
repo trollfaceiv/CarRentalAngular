@@ -14,6 +14,7 @@ import { LoginComponent } from './core/components/login/login.component';
 import { AuthGuard } from './core/services/auth.guard';
 import { NewRentComponent } from './features/rent/components/new-rent/new-rent.component';
 import { RentListComponent } from './features/rent/components/rent-list/rent-list.component';
+import { DashboardComponent } from './core/components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RentListComponent } from './features/rent/components/rent-list/rent-lis
     LoginComponent,
     NewRentComponent,
     RentListComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

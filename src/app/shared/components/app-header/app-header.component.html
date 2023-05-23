@@ -1,4 +1,5 @@
 <div>
+  <ng-container *ngIf="!isAdmin">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mr">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -8,8 +9,8 @@
         <li class="nav-item active">
           <a class="nav-link" routerLink="/vehicle-info">Veicoli</a>
         </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/show-rents">Noleggi</a>
+        <li *ngIf = "loggedUser" class="nav-item active">
+          <a class="nav-link" href="">Profilo</a>
         </li>
       </ul>
 
@@ -40,4 +41,56 @@
       </div>
     </div>
   </nav>
+</ng-container>
+
+
+
+
+
+<ng-container *ngIf="isAdmin">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mr">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/vehicle-info">Gestisci veicoli</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="">Gestisci noleggi</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="">Gestisci utenti</a>
+        </li>
+      </ul>
+
+      <div class="navbar-nav ml-auto">
+        <ng-container *ngIf="loggedUser; else elseBlock" class="mr-3">
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Ciao {{loggedUser.firstName}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseBlock>
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Login/Registrati
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" routerLink="/login">Login</a>
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+</ng-container>
 </div>

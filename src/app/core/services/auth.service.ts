@@ -3,23 +3,27 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { User } from 'src/app/features/user/models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: Router) { }
 
   login(email: string, password: string): Observable<boolean> {
-    // Effettua una richiesta al JSON Server per verificare le credenziali dell'utente
     return this.http.get<User[]>('http://localhost:3000/users', { params: { email, password } })
       .pipe(
         tap((users: User[]) => {
           if (users.length === 1) {
             localStorage.setItem('loggedInUser', JSON.stringify(users[0]));
+            this.route.navigate(['']).then(() => {
+              location.reload();
+            });
           }
         }),
         map((users: User[]) => users.length === 1)
+        
       );
   }
 

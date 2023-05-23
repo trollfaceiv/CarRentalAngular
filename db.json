@@ -8,6 +8,15 @@
       "password": "123456",
       "role": "admin",
       "dateOfBirth": "1990-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "a",
+      "password": "a",
+      "role": "user",
+      "dateOfBirth": "1990-01-01T00:00:00.000Z"
     }
   ],
   "rents": [],

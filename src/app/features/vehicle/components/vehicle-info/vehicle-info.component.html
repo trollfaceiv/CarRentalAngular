@@ -1,8 +1,19 @@
+<ng-container *ngIf="isAdmin">
 <app-my-table *ngIf="vehicleArray"
   [tableConfig]="vehicleTabHeaders"
   [data]="vehicleArray"
   (performActionEmitter)="handlePerformedAction($event)"
   (performNewActionEmitter)="handleNewPerformedAction($event)">
 </app-my-table>
+</ng-container>
+
+<ng-container *ngIf="!isAdmin">
+<app-my-table *ngIf="vehicleArray"
+  [tableConfig]="vehicleUserTabHeaders"
+  [data]="vehicleArray"
+  (performActionEmitter)="handlePerformedAction($event)"
+  (performNewActionEmitter)="handleNewPerformedAction($event)">
+</app-my-table>
+</ng-container>
 
 

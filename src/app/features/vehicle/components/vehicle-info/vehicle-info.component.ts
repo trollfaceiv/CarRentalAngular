@@ -5,6 +5,7 @@ import { MyTableActionEnum } from 'src/app/shared/components/my-table/my-table.a
 import { VehicleService } from '../../services/vehicle.service';
 import { MyHeaders } from 'src/app/shared/components/my-table/my-table.headers';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -16,9 +17,10 @@ import { Router } from '@angular/router';
 
 export class VehicleInfoComponent implements OnInit {
 
-  constructor(private vehicleService: VehicleService, private cdr: ChangeDetectorRef, private router: Router) { }
+  constructor(private vehicleService: VehicleService, private authService: AuthService, private router: Router) { }
 
   vehicleArray!: Vehicle[];
+  isAdmin = false;
   vehicleTabHeaders: MyTableConfig<Vehicle> = new MyTableConfig(
     ['Id', 'Casa madre', 'Modello', 'Data di Immatricolazione', 'Numero di targa'],
     Vehicle,
@@ -28,13 +30,26 @@ export class VehicleInfoComponent implements OnInit {
     [{ type: MyTableActionEnum.DELETE, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Elimina', image: '' } },
     { type: MyTableActionEnum.EDIT, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Modifica', image: '' } },
     { type: MyTableActionEnum.NEW_ROW, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Aggiungi riga', image: '' } },
-    { type: MyTableActionEnum.RENT, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Noleggia', image: '' } }]);
+    ]);
 
+
+    vehicleUserTabHeaders: MyTableConfig<Vehicle> = new MyTableConfig(
+      ['Id', 'Casa madre', 'Modello', 'Data di Immatricolazione', 'Numero di targa'],
+      Vehicle,
+      { defaultColumn: 'id', orderType: 'asc' },
+      { columns: ['Casa madre', 'Modello'] },
+      { itemPerPage: 5, itemPerPageOptions: [5, 10, 20, 50] },
+      [{ type: MyTableActionEnum.INFO, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Info', image: '' } },
+      { type: MyTableActionEnum.RENT, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Noleggia', image: '' } }
+]);
+  
+
+      
 
   ngOnInit(): void {
 
     this.getVehicles();
-
+    this.isAdmin = this.authService.isAdmin();
   }
 
 
