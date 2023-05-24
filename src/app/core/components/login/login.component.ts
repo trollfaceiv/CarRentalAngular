@@ -16,14 +16,15 @@ export class LoginComponent {
   userLogged: User | null = null;
   email!: string;
   password!: string;
-  
+  loginFailed = false;
   login() {
     this.authService.login(this.email, this.password).subscribe((result: boolean) => {
       if (result) {
         console.log("Login effettuato");
         this.userLogged = this.authService.getUserLogged();
-        console.log(this.userLogged);
+        this.loginFailed = false;
       } else {
+        this.loginFailed = true;
         console.log("Login fallito");
       }
     });

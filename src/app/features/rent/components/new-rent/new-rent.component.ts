@@ -31,7 +31,7 @@ export class NewRentComponent implements OnInit {
   selectedVehicle!: Vehicle
   selectedUser!: User
   rentButton: MyButtonConfig = { customCssClass: 'btn btn-primary mr-2', text: 'Noleggia', image: '' };
-
+  invalidTime!: boolean;
   startDate!: Date;
   endDate!: Date;
 
@@ -51,9 +51,17 @@ export class NewRentComponent implements OnInit {
     const plateNumber = this.selectedVehicle.plateNumber;
     const email = this.selectedUser.email;
     const newRent = new Rent(0, this.startDate, this.endDate, plateNumber, email);
-    this.rentService.addRent(newRent).subscribe((rent: Rent) => {
-      console.log(rent);
-    });
+    const today = new Date();
+    const formattedStartDate = new Date(this.startDate);
+    const formattedEndDate = new Date(this.endDate)
+    if (formattedEndDate >= formattedStartDate && formattedStartDate >= today) {
+      this.rentService.addRent(newRent).subscribe((rent: Rent) => {
+        this.invalidTime = true;
+        console.log(rent);
+      });
+    }
+    else
+    this.invalidTime = false;
   }
 
 

@@ -39,7 +39,7 @@ export class MyTableConfig<T>{
         const attributes = new Set<string>();
         const instance = new className();
         Object.getOwnPropertyNames(instance).forEach(key => {
-            if (key !== 'constructor') {
+            if (key !== 'constructor' && key !== 'password') {
               attributes.add(key);
             }
           });

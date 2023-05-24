@@ -34,7 +34,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" routerLink="/login">Login</a>
-              <a class="dropdown-item" (click)="logout()">Logout</a>
+              <a *ngIf="loggedUser" class="dropdown-item" (click)="logout()">Logout</a>
             </div>
           </div>
         </ng-template>
@@ -58,7 +58,7 @@
           <a class="nav-link" routerLink="/vehicle-info">Gestisci veicoli</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="">Gestisci noleggi</a>
+          <a class="nav-link" routerLink="/show-rents">Gestisci noleggi</a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" routerLink="/user-list">Gestisci utenti</a>

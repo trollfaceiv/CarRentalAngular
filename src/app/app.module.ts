@@ -8,32 +8,28 @@ import { SharedModuleModule } from './shared/shared.module.module';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { VehicleModule } from './features/vehicle/vehicle.module';
 import { HttpClientModule } from '@angular/common/http';
-import { UserListComponent } from './features/user/components/user-list/user-list.component';
-import { UserInfoComponent } from './features/user/components/user-info/user-info.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { AuthGuard } from './core/services/auth.guard';
-import { NewRentComponent } from './features/rent/components/new-rent/new-rent.component';
-import { RentListComponent } from './features/rent/components/rent-list/rent-list.component';
 import { DashboardComponent } from './core/components/dashboard/dashboard.component';
+import { UserModule } from './features/user/user.module';
+import { RentModule } from './features/rent/rent.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    UserListComponent,
-    UserInfoComponent,
     LoginComponent,
-    NewRentComponent,
-    RentListComponent,
     DashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModuleModule,
+    UserModule,
     VehicleModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RentModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

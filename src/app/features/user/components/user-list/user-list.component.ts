@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit{
   usersArray!: User[];
 
   usersTabHeaders: MyTableConfig<User> = new MyTableConfig(
-    ['Id', 'Nome', 'Cognome', 'Email','Password', 'Ruolo', 'Data di nascita'],
+    ['Id', 'Nome', 'Cognome', 'Email', 'Ruolo', 'Data di nascita'],
     User,
     { defaultColumn: 'id', orderType: 'asc' },
     { columns: ['Email'] },

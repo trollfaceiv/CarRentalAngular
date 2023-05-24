@@ -1,6 +1,10 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6">
+      <div *ngIf="plateError || regexError" class="alert alert-danger mt-3" role="alert">
+        <p *ngIf ="regexError" class="alert-danger">La targa non rispetta il formato italiano</p>
+        <p *ngIf = "plateError" class="alert-danger">Targa già esistente in elenco.</p>
+      </div>
       <ng-container *ngFor="let x of attributes">
         <ng-container *ngIf="x.key !== 'id'">
           <div class="form-group">

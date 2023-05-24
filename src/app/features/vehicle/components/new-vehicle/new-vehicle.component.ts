@@ -6,6 +6,7 @@ import { MyTableConfig } from 'src/app/shared/components/my-table/my-table.confi
 import { MyHeaders } from 'src/app/shared/components/my-table/my-table.headers';
 import { HeaderExtractorService } from 'src/app/shared/services/header-extractor.service';
 import { MyButtonConfig } from 'src/app/shared/components/my-button/my-button.config';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-new-vehicle',
@@ -21,23 +22,32 @@ export class NewVehicleComponent implements OnInit {
     private headerService: HeaderExtractorService,
     private router: Router) { }
 
+  plateError = false;
   selectedVehicle!: Vehicle;
   attributes!: MyHeaders[];
   mockVehicle: Vehicle = new Vehicle(1, 'Fiat', 'Panda', '2010-10-10', 'AB123CD');
-  sendButton: MyButtonConfig =  { customCssClass: 'btn btn-primary mr-2', text: 'Invia', image: '' };
-  saveButton: MyButtonConfig =  { customCssClass: 'btn btn-primary mr-2', text: 'Salva', image: '' };
-
+  sendButton: MyButtonConfig = { customCssClass: 'btn btn-primary mr-2', text: 'Invia', image: '' };
+  saveButton: MyButtonConfig = { customCssClass: 'btn btn-primary mr-2', text: 'Salva', image: '' };
+  vehicleArray!: Vehicle[];
+  regexError = false;
   ngOnInit(): void {
-    if(!this.exist()){
+    this.getVehicles();
+
+    if (!this.exist()) {
       this.selectedVehicle = new Vehicle(0, '', '', '', '');
     }
-    else{this.getSelectedVehicle();
+    else {
+      this.getSelectedVehicle();
     }
     this.getAttributes();
-    console.log(this.attributes);
   }
 
-  exist(){
+  getVehicles() {
+    this.vehicleService.getVehicles().subscribe((vehicles: Vehicle[]) => {
+      this.vehicleArray = vehicles;
+    });
+  }
+  exist() {
     return Number(this.route.snapshot.paramMap.get('id'));
   }
 
@@ -51,14 +61,51 @@ export class NewVehicleComponent implements OnInit {
       .subscribe((vehicle: Vehicle) => { this.selectedVehicle = vehicle });
   }
 
-  updateVehicle(){
-    this.vehicleService.updateVehicle(this.selectedVehicle).subscribe();
-    this.router.navigate(['/vehicle-info']);
+  updateVehicle() {
+    const vehicleFound = _.find(this.vehicleArray, { plateNumber: this.selectedVehicle.plateNumber });
+    if (vehicleFound && vehicleFound.id !== this.selectedVehicle.id) {
+      this.plateError = true;
+      this.regexError = false;
+    }
+    else if(!this.regexTest()){
+      this.regexError = true;
+      this.plateError = false;
+    }
+    else {
+      this.vehicleService.updateVehicle(this.selectedVehicle).subscribe();
+      this.router.navigate(['/vehicle-info']);
+    }
   }
 
-  saveVehicle(){
-    this.vehicleService.addVehicle(this.selectedVehicle).subscribe();
-    this.router.navigate(['/vehicle-info']);
+  regexTest() {
+    const regex = /^[A-Z]{2}\d{3}[A-Z]{2}$/;
+    if (!regex.test(this.selectedVehicle.plateNumber)) {
+      return false;
+    }
+    return true;
+  }
+
+  find(){
+    const vehicleFound = _.find(this.vehicleArray, { plateNumber: this.selectedVehicle.plateNumber });
+    if(vehicleFound){
+      return true;
+    }
+    return false;
+  }
+
+  saveVehicle() {
+    const regex = /^[A-Z]{2}\d{3}[A-Z]{2}$/;
+    if (!this.regexTest()) {
+      this.regexError = true;
+    }
+    else if (this.find()) {
+      this.plateError = true;
+      this.regexError = false;
+    }
+    if(!this.find() && this.regexTest()) {
+      this.vehicleService.addVehicle(this.selectedVehicle).subscribe();
+      this.router.navigate(['/vehicle-info']);
+    }
   }
 }
 
