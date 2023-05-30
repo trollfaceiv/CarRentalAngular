@@ -7,7 +7,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class UserService {
-  usersUrl = 'http://localhost:3000/users';
+  usersUrl = 'http://localhost:8080/api/users';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,6 +31,13 @@ export class UserService {
     return this.http.get<User>(url).pipe
       (catchError(this.handleError<User>('getUserById')))
   }
+
+  getUserByEmail(email: string): Observable<User> {
+    const url = `${this.usersUrl}/email/${email}`
+    return this.http.get<User>(url).pipe
+      (catchError(this.handleError<User>('getUserByEmail')))
+  }
+
   deleteUser(id:number): Observable<User>{
     const url = `${this.usersUrl}/${id}`
     return this.http.delete<User>(url, this.httpOptions)

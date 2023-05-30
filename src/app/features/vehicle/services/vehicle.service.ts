@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of} from 'rxjs';
+import { catchError,  map  } from 'rxjs/operators';
 import { Vehicle } from '../models/vehicle.model';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { Vehicle } from '../models/vehicle.model';
 
 
 export class VehicleService {
-  vehicleUrl = 'http://localhost:3000/vehicles';
+  vehicleUrl = 'http://localhost:8080/api/vehicles';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,11 +19,11 @@ export class VehicleService {
 
   constructor(private http: HttpClient) { }
 
-  
-  getVehicles(): Observable<Vehicle[]>{
-    return this.http.get<Vehicle[]>(this.vehicleUrl)
-    .pipe(catchError(this.handleError<Vehicle[]>('getVehicles', [])))
+  getVehicles(): Observable<Vehicle[]> {
+    return this.http.get<Vehicle[]>(this.vehicleUrl);
   }
+  
+  
 
   addVehicle(vehicle: Vehicle): Observable<Vehicle>{
     return this.http.post<Vehicle>(this.vehicleUrl, vehicle)
@@ -49,11 +49,18 @@ export class VehicleService {
     (catchError(this.handleError<Vehicle>('getVehicleById')))
   }
 
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
+  }
+}
+
+interface GetResponse {
+  _embedded: {
+    vehicle: Vehicle[];
   }
 }

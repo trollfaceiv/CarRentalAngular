@@ -4,9 +4,9 @@
 </button>
 
 <ng-container *ngIf="!showFilteredTable">
-<app-my-table *ngIf="rentArray"
+<app-my-table *ngIf="renderedArray"
   [tableConfig]="rentTabHeaders"
-  [data]="rentArray"
+  [data]="renderedArray"
   (performActionEmitter)="handlePerformedAction($event)"
 ></app-my-table>
 </ng-container>

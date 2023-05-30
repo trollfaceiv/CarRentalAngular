@@ -7,6 +7,7 @@ import { MyHeaders } from 'src/app/shared/components/my-table/my-table.headers';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MyButtonConfig } from 'src/app/shared/components/my-button/my-button.config';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class VehicleInfoComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private authService: AuthService, private router: Router) { }
 
   vehicleArray!: Vehicle[];
-  isAdmin = false;
+  isAdmin!: Observable<boolean>
   vehicleTabHeaders: MyTableConfig<Vehicle> = new MyTableConfig(
     ['Id', 'Casa madre', 'Modello', 'Data di Immatricolazione', 'Numero di targa'],
     Vehicle,
@@ -78,6 +79,7 @@ export class VehicleInfoComponent implements OnInit {
   getVehicles() {
     this.vehicleService.getVehicles().subscribe((vehicles: Vehicle[]) => {
       this.vehicleArray = vehicles;
+      console.log(this.vehicleArray);
     });
   }
 

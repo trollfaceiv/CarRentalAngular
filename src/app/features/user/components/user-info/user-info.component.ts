@@ -36,10 +36,10 @@ export class UserInfoComponent {
   rentArray!: Rent[];
   
   rentUserTabHeaders: MyTableConfig<Rent> = new MyTableConfig(
-    ['Id', "Data di inizio noleggio", 'Data di fine noleggio', 'Targa veicolo', 'Email utente','Stato: '],
+    ['Id', "Data di inizio noleggio", 'Data di fine noleggio', 'ID veicolo', 'ID utente','Stato'],
     Rent,
     { defaultColumn: 'id', orderType: 'asc' },
-    { columns: ['Targa veicolo'] },
+    { columns: ['Stato'] },
     { itemPerPage: 5, itemPerPageOptions: [5, 10, 20, 50] },
     [] 
 );
@@ -55,14 +55,46 @@ export class UserInfoComponent {
     
  
   }
-
+ /*  transformArray(rents: Rent[]) {
+    return rents.map((rent) => {
+      const transformedRent = { ...rent };
+  
+      if ('userId' in transformedRent) {
+        transformedRent.user = transformedRent.userId as number;
+        delete transformedRent.userId;
+      }
+  
+      if ('vehicleId' in transformedRent) {
+        transformedRent.car = transformedRent.vehicleId as number;
+        delete transformedRent.vehicleId;
+      }
+  
+      return transformedRent;
+    });
+  } */
   getRents(){
-    this.rentService.getRentByEmail(this.selectedUser.email).subscribe((rents: Rent[]) => {
-      this.rentArray = rents;
-      console.log(this.rentArray)
+    this.rentService.getRentByID(this.selectedUser.id).subscribe((rents: Rent[]) => {
+      this.rentArray = rents
+      this.rentArray = this.mapFunction(this.rentArray);
     });
   }
-  
+  mapFunction(rents: any[]){
+    rents = rents.map(function (rent) {
+      if (rent.car && rent.car.id !== undefined) {
+        return {
+          id: rent.id,
+          startDate: rent.startDate,
+          endDate: rent.endDate,
+          car: rent.car.plateNumber,
+          user: rent.user,
+          approved: rent.approved
+        };
+      } else {
+        return rent;
+      }
+    });
+    return rents;
+  }
   exist(){
     return Number(this.route.snapshot.paramMap.get('id'));
   }

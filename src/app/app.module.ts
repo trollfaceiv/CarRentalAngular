@@ -13,6 +13,7 @@ import { AuthGuard } from './core/services/auth.guard';
 import { DashboardComponent } from './core/components/dashboard/dashboard.component';
 import { UserModule } from './features/user/user.module';
 import { RentModule } from './features/rent/rent.module';
+import { RegisterComponent } from './core/components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { RentModule } from './features/rent/rent.module';
     FooterComponent,
     LoginComponent,
     DashboardComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

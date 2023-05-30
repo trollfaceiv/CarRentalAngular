@@ -1,54 +1,89 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, concatMap } from 'rxjs/operators';
 import { User } from 'src/app/features/user/models/user';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/features/user/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient, private route: Router) { }
+  constructor(private http: HttpClient, private route: Router, private userService: UserService) { }
 
-  login(email: string, password: string): Observable<boolean> {
-    return this.http.get<User[]>('http://localhost:3000/users', { params: { email, password } })
-      .pipe(
-        tap((users: User[]) => {
-          if (users.length === 1) {
-            localStorage.setItem('loggedInUser', JSON.stringify(users[0]));
-            this.route.navigate(['']).then(() => {
-              location.reload();
-            });
-          }
-        }),
-        map((users: User[]) => users.length === 1)
-        
-      );
+  register(firstName: string, lastName: string, email: string, password: string, birthDate: Date): Observable<User> {
+    return this.http.post<User>('http://localhost:8080/api/v1/auth/register', { firstName, lastName, email, password, birthDate }).pipe(
+      concatMap(() => this.login(email, password))
+    );
   }
 
+
+
+
+  login(email: string, password: string) {
+    return this.http.post<any>('http://localhost:8080/api/v1/auth/authenticate', { email, password }).pipe(
+      map(
+        userData => {
+          sessionStorage.setItem('email', email);
+          let tokenStr = 'Bearer ' + userData.token;
+          sessionStorage.setItem('token', tokenStr);
+          this.route.navigate(['']).then(() => {
+            location.reload();
+          });
+          return userData;
+        }
+      )
+
+    );
+  }
+
+
+
+  /* 
+    login(email: string, password: string) {
+      return this.http.post<any>('http://localhost:8080/api/v1/auth/authenticate', { email, password })
+        .pipe(
+          tap(() => {
+            {
+              localStorage.setItem('loggedEmail', JSON.stringify(email));
+              localStorage.setItem('token', JSON.stringify(email)
+              this.route.navigate(['']).then(() => {
+                location.reload();
+              });
+            }
+          }),
+          map((users: User[]) => users.length === 1)
+  
+        );
+    } */
+
   logout(): void {
-    localStorage.removeItem('loggedInUser');
-    if(this.getUserLogged() === null){
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('token');
+
+    if (this.getUserLogged() === null) {
       console.log("Logout effettuato");
     }
-    else{
+    else {
       console.log("Logout fallito");
     }
   }
 
-  
-  getUserLogged(): User | null {
-    const savedUser = localStorage.getItem('loggedInUser');
-    return savedUser ? JSON.parse(savedUser) : null;
+
+
+  getUserLogged(): Observable<User | null> {
+    const email = sessionStorage.getItem('email') || '';
+    return this.userService.getUserByEmail(email);
   }
 
   isLogged(): boolean {
-    return localStorage.getItem('loggedInUser') !== null;
+    return sessionStorage.getItem('email') !== null;
   }
 
-  isAdmin(): boolean {
-    const user = this.getUserLogged();
-    return user?.role === 'admin';
+  isAdmin(): Observable<boolean> {
+    return this.getUserLogged().pipe(
+      map((user: User | null) => user?.role === 'admin' || false)
+    );
   }
 }

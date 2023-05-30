@@ -24,7 +24,6 @@ export class NewRentComponent implements OnInit {
   ngOnInit(): void {
     this.getSelectedVehicle();
     this.getUserLogged();
-    console.log("L'utenza loggata è: " + this.selectedUser.id + "Il veicolo selezionato è: " + this.selectedVehicle.id);
   }
 
 
@@ -48,16 +47,16 @@ export class NewRentComponent implements OnInit {
   }
 
   createRent() {
-    const plateNumber = this.selectedVehicle.plateNumber;
-    const email = this.selectedUser.email;
-    const newRent = new Rent(0, this.startDate, this.endDate, plateNumber, email);
+    const vehiclId = this.selectedVehicle.id;
+    const useId = this.selectedUser.id;
+    const newRent = new Rent(0, this.startDate, this.endDate, this.selectedVehicle, this.selectedUser);
     const today = new Date();
     const formattedStartDate = new Date(this.startDate);
     const formattedEndDate = new Date(this.endDate)
+    console.log(newRent)
     if (formattedEndDate >= formattedStartDate && formattedStartDate >= today) {
       this.rentService.addRent(newRent).subscribe((rent: Rent) => {
         this.invalidTime = true;
-        console.log(rent);
       });
     }
     else

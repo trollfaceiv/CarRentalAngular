@@ -8,7 +8,7 @@ import { Rent } from "../models/rent";
   providedIn: 'root'
 })
 export class RentService {
-  rentUrl = 'http://localhost:3000/rents';
+  rentUrl = 'http://localhost:8080/api/rents';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -39,11 +39,13 @@ export class RentService {
       (catchError(this.handleError<Rent>('getRentById')))
   }
   
-  getRentByEmail(email: string): Observable<Rent[]> {
-    const url = `${this.rentUrl}?user=${email}`
+  getRentByID(id: number): Observable<Rent[]> {
+    const url = `${this.rentUrl}/userId/${id}`
     return this.http.get<Rent[]>(url).pipe
-      (catchError(this.handleError<Rent[]>('getRentByEmail', [])))
+      (catchError(this.handleError<Rent[]>('getRentByID', [])))
   }
+
+  
   updateRent(rent: Rent): Observable<Rent>{
     const id = rent.id;
     const url = `${this.rentUrl}/${id}`

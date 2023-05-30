@@ -25,7 +25,7 @@ export class NewVehicleComponent implements OnInit {
   plateError = false;
   selectedVehicle!: Vehicle;
   attributes!: MyHeaders[];
-  mockVehicle: Vehicle = new Vehicle(1, 'Fiat', 'Panda', '2010-10-10', 'AB123CD');
+  mockVehicle: Vehicle = new Vehicle(1, 'Fiat', 'Panda', new Date(), 'AB123CD');
   sendButton: MyButtonConfig = { customCssClass: 'btn btn-primary mr-2', text: 'Invia', image: '' };
   saveButton: MyButtonConfig = { customCssClass: 'btn btn-primary mr-2', text: 'Salva', image: '' };
   vehicleArray!: Vehicle[];
@@ -34,7 +34,7 @@ export class NewVehicleComponent implements OnInit {
     this.getVehicles();
 
     if (!this.exist()) {
-      this.selectedVehicle = new Vehicle(0, '', '', '', '');
+      this.selectedVehicle = new Vehicle(0, '', '', new Date(), '');
     }
     else {
       this.getSelectedVehicle();
