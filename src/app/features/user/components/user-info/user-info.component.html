@@ -7,10 +7,17 @@
       <ng-container *ngFor="let x of attributes">
         <ng-container *ngIf="x.key !== 'id'">
           <div class="form-group">
-            <ng-container *ngIf="x.key !== 'dateOfBirth'">
+            <ng-container *ngIf="x.key !== 'dateOfBirth' && x.key !== 'role'">
               <label class="text-white" for="{{ x.key }}">{{ x.label }}:</label>
               <input class="form-control" id="{{ x.key }}" [(ngModel)]="selectedUser[x.key]"
                 placeholder="{{ x.label }}">
+            </ng-container>
+            <ng-container *ngIf="x.key === 'role'">
+              <label class="text-white" for="{{ x.key }}">{{ x.label }}:</label>
+              <select class="form-control" id="{{ x.key }}" [(ngModel)]="selectedUser[x.key]">
+                <option value="USER">USER</option>
+                <option value="ADMIN">ADMIN</option>
+              </select>
             </ng-container>
             <ng-container *ngIf="x.key === 'dateOfBirth'">
               <label class="text-white" for="{{ x.key }}">{{ x.label }}:</label>

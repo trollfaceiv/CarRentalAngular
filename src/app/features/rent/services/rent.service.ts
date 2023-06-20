@@ -1,30 +1,41 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, of } from "rxjs";
+import { Observable, catchError, of, throwError } from "rxjs";
 import { User } from "../../user/models/user";
 import { Rent } from "../models/rent";
+import { Router } from "@angular/router";
+import { UrlService } from "src/app/core/services/url.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentService {
-  rentUrl = 'http://localhost:3000/rents';
-
+  rentUrl = this.url.getBaseUrl() + 'api/rents';
+  exceptionMessage!:string;
+  
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private url: UrlService) { }
 
 
   getRents(): Observable<Rent[]> {
-    return this.http.get<Rent[]>(this.rentUrl)
+    return this.http.get<Rent[]>(this.rentUrl, this.httpOptions)
       .pipe(catchError(this.handleError<Rent[]>('getRents', [])))
   }
 
   addRent(rent: Rent): Observable<Rent> {
-    return this.http.post<Rent>(this.rentUrl, rent)
-      .pipe(catchError(this.handleError<Rent>('addRent')))
+    return this.http.post<Rent>(this.rentUrl, rent, this.httpOptions).pipe(
+      catchError((error: any) => {
+          this.exceptionMessage = error.error;
+          const errorMessage = error.error;
+          throw new Error(errorMessage);
+      })
+    );
   }
 
   deleteRent(id:number): Observable<Rent>{
@@ -35,15 +46,17 @@ export class RentService {
 
   getRentById(id: number): Observable<Rent> {
     const url = `${this.rentUrl}/${id}`
-    return this.http.get<Rent>(url).pipe
+    return this.http.get<Rent>(url, this.httpOptions).pipe
       (catchError(this.handleError<Rent>('getRentById')))
   }
   
-  getRentByEmail(email: string): Observable<Rent[]> {
-    const url = `${this.rentUrl}?user=${email}`
-    return this.http.get<Rent[]>(url).pipe
-      (catchError(this.handleError<Rent[]>('getRentByEmail', [])))
+  getRentByID(id: number): Observable<Rent[]> {
+    const url = `${this.rentUrl}/userId/${id}`
+    return this.http.get<Rent[]>(url, this.httpOptions).pipe
+      (catchError(this.handleError<Rent[]>('getRentByID', [])))
   }
+
+  
   updateRent(rent: Rent): Observable<Rent>{
     const id = rent.id;
     const url = `${this.rentUrl}/${id}`
@@ -53,6 +66,8 @@ export class RentService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      if(error.status == 403)
+        this.router.navigateByUrl('/access-denied');
       console.error(error); // log to console instead
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);

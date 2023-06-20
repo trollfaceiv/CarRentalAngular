@@ -10,19 +10,23 @@ import { RentListComponent } from './features/rent/components/rent-list/rent-lis
 import { DashboardComponent } from './core/components/dashboard/dashboard.component';
 import { UserListComponent } from './features/user/components/user-list/user-list.component';
 import { UserInfoComponent } from './features/user/components/user-info/user-info.component';
+import { RegisterComponent } from './core/components/register/register.component';
+import { AccessDeniedComponent } from './core/components/access-denied/access-denied.component';
 
 const routes: Routes = [
   { path: 'vehicle-info', component: VehicleInfoComponent },
   { path: 'edit-vehicle/:id', component: NewVehicleComponent, canActivate: [RoleGuard] },
   { path: 'edit-vehicle', component: NewVehicleComponent, canActivate: [RoleGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'rent-vehicle/:id', component: NewRentComponent, canActivate: [AuthGuard]},
+  { path: 'rent-vehicle/:id', component: NewRentComponent},
   { path: 'show-rents', component: RentListComponent, canActivate: [RoleGuard] },
   { path: 'dashboard', component: DashboardComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   { path: 'user-list', component:UserListComponent, canActivate: [RoleGuard]},
   { path: 'user-info/:id', component: UserInfoComponent, canActivate: [AuthGuard] },
-  { path: 'user-info', component: UserInfoComponent, canActivate: [RoleGuard]}
+  { path: 'user-info', component: UserInfoComponent, canActivate: [RoleGuard]},
+  { path: 'register', component: RegisterComponent},
+  { path: 'access-denied', component: AccessDeniedComponent}
 ]; // sets up routes constant where you define your routes
 
 // configures NgModule imports and exports

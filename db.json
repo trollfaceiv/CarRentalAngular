@@ -1,15 +1,6 @@
 {
   "users": [
     {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Doex",
-      "email": "admin",
-      "password": "admin",
-      "role": "admin",
-      "dateOfBirth": "1990-01-01T00:00:00.000Z"
-    },
-    {
       "id": 2,
       "firstName": "Gennaro",
       "lastName": "rUSSO",
@@ -19,7 +10,7 @@
       "dateOfBirth": "2019-05-23"
     },
     {
-      "id": 3,
+      "id": 1,
       "firstName": "pinc",
       "lastName": "pinc",
       "email": "b",
@@ -28,48 +19,7 @@
       "dateOfBirth": "2023-05-23"
     }
   ],
-  "rents": [
-    {
-      "id": 1,
-      "startDate": "2023-05-27",
-      "endDate": "2023-05-31",
-      "car": "UV678WX",
-      "user": "b",
-      "approved": "Approvato"
-    },
-    {
-      "id": 2,
-      "startDate": "2023-05-25",
-      "endDate": "2023-05-27",
-      "car": "OP123QR",
-      "user": "b",
-      "approved": "Rifiutato"
-    },
-    {
-      "id": 3,
-      "startDate": "2023-05-27",
-      "endDate": "2023-05-28",
-      "car": "OP123QR",
-      "user": "b",
-      "approved": "Rifiutato"
-    },
-    {
-      "id": 4,
-      "startDate": "2023-05-27",
-      "endDate": "2023-05-28",
-      "car": "OP123QR",
-      "user": "b",
-      "approved": "Rifiutato"
-    },
-    {
-      "id": 5,
-      "startDate": "2023-06-06",
-      "endDate": "2023-06-16",
-      "car": "YZ901AE",
-      "user": "b",
-      "approved": "In attesa"
-    }
-  ],
+  "rents": [],
   "vehicles": [
     {
       "id": 6,
@@ -86,13 +36,6 @@
       "plateNumber": "YZ901AB"
     },
     {
-      "id": 8,
-      "factory": "Audi",
-      "model": "A4",
-      "plateDate": "2022-06-18T00:00:00.000Z",
-      "plateNumber": "YZ901AB"
-    },
-    {
       "id": 11,
       "factory": "Nissan",
       "model": "Altima",
@@ -105,13 +48,6 @@
       "model": "Impreza",
       "plateDate": "2022-09-01T00:00:00.000Z",
       "plateNumber": "WX567YZ"
-    },
-    {
-      "id": 17,
-      "factory": "Hyundai",
-      "model": "Elantra",
-      "plateDate": "2022-12-25T00:00:00.000Z",
-      "plateNumber": "MN345OP"
     },
     {
       "id": 18,
@@ -140,13 +76,6 @@
       "model": "Rav4",
       "plateDate": "2022-11-10T00:00:00.000Z",
       "plateNumber": "GH890IJ"
-    },
-    {
-      "id": 26,
-      "factory": "Audi",
-      "model": "Q5",
-      "plateDate": "2022-12-25T00:00:00.000Z",
-      "plateNumber": "WX901YZ"
     },
     {
       "id": 29,

@@ -18,28 +18,29 @@ export class RentListComponent implements OnInit {
 
   rentArray!: Rent[];
   editedRent!: Rent;
-  rentFilteredArray: Rent[] = [];
+  rentFilteredArray!:any;
   showFilteredTable: boolean = false;
+  renderedArray!: any;
 
   rentTabHeaders: MyTableConfig<Rent> = new MyTableConfig(
-    ['Id', "Data di inizio noleggio", 'Data di fine noleggio', 'Targa veicolo', 'Email utente','Stato: '],
+    ['Id', "Data di inizio noleggio", 'Data di fine noleggio', 'Id veicolo', 'Id utente', 'Stato: '],
     Rent,
     { defaultColumn: 'id', orderType: 'asc' },
-    { columns: ['Targa veicolo', 'Email utente'] },
-    { itemPerPage: 5 , itemPerPageOptions: [5, 10, 20, 50] },
+    { columns: ['Id veicolo', 'Id utente'] },
+    { itemPerPage: 5, itemPerPageOptions: [5, 10, 20, 50] },
     [{ type: MyTableActionEnum.DELETE, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Elimina', image: '' } },
     { type: MyTableActionEnum.APPROVE, buttonConfig: { customCssClass: 'btn btn-success mr-2', text: 'Approva', image: '' } },
     { type: MyTableActionEnum.REJECT, buttonConfig: { customCssClass: 'btn btn-danger mr-2', text: 'Rifiuta', image: '' } },
-   ]);
+    ]);
 
-   rentFilteredTable: MyTableConfig<Rent> = new MyTableConfig(
-    ['Id', "Data di inizio noleggio", 'Data di fine noleggio', 'Targa veicolo', 'Email utente','Stato: '],
+  rentFilteredTable: MyTableConfig<Rent> = new MyTableConfig(
+    ['Id', "Data di inizio noleggio", 'Data di fine noleggio', 'Targa veicolo', 'Email utente', 'Stato: '],
     Rent,
     { defaultColumn: 'id', orderType: 'asc' },
     { columns: ['Targa veicolo', 'Email utente'] },
-    { itemPerPage: 5 , itemPerPageOptions: [5, 10, 20, 50] },
+    { itemPerPage: 5, itemPerPageOptions: [5, 10, 20, 50] },
     [{ type: MyTableActionEnum.DELETE, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Elimina', image: '' } }
-   ]);
+    ]);
 
 
   ngOnInit(): void {
@@ -49,37 +50,78 @@ export class RentListComponent implements OnInit {
   toggleTable() {
     this.showFilteredTable = !this.showFilteredTable;
   }
-  
 
 
+mapFunction(rents: any[]){
+  rents = rents.map(function (rent) {
+    if (rent.car && rent.car.id !== undefined) {
+      return {
+        id: rent.id,
+        startDate: rent.startDate,
+        endDate: rent.endDate,
+        car: rent.car.plateNumber,
+        user: rent.user,
+        approved: rent.approved
+      };
+    } else {
+      return rent;
+    }
+  });
+  return rents;
+}
 
   getRents() {
     this.rentService.getRents().subscribe((rents: Rent[]) => {
-      this.rentArray = _.filter(rents, (rent: Rent) => rent.approved === 'In attesa');
-      this.rentFilteredArray = _.filter(rents, (rent: Rent) => rent.approved !== 'In attesa');
+      this.renderedArray = this.mapFunction(rents);
+      let arrayToFilter = this.mapFunction(rents);
+      this.renderedArray = _.filter(arrayToFilter, (rent: Rent) => rent.approved === 'In attesa');
+      this.rentFilteredArray = _.filter(arrayToFilter, (rent: Rent) => rent.approved !== 'In attesa');
     });
   }
-  
 
 
-  approveRent(rentId: number){
-      this.rentService.getRentById(rentId).subscribe((rent: Rent) => {
-        this.editedRent = rent;
-        this.editedRent.approved = 'Approvato';
-        this.rentService.updateRent(this.editedRent).subscribe(() => {
-          this.rentFilteredArray.push(this.editedRent);
-          this.rentArray = _.remove(this.rentArray, (rent) => rent.id !== rentId);
-        });
+  /* transformArray(rents: Rent[]) {
+      return rents.map((rent) => {
+        const transformedRent = { ...rent };
+    
+        if ('userId' in transformedRent) {
+          transformedRent.user = transformedRent.userId as number;
+          delete transformedRent.userId;
+        }
+    
+        if ('vehicleId' in transformedRent) {
+          transformedRent.car = transformedRent.vehicleId as number;
+          delete transformedRent.vehicleId;
+        }
+    
+        return transformedRent;
       });
+    } */
+
+
+
+
+  approveRent(rentId: number) {
+    this.rentService.getRentById(rentId).subscribe((rent: Rent) => {
+      this.editedRent = rent;
+      this.editedRent.approved = 'Approvato';
+      this.rentService.updateRent(this.editedRent).subscribe(() => {
+        this.rentFilteredArray.push(this.editedRent);
+        this.renderedArray = _.remove(this.renderedArray, (rent:any) => rent.id !== rentId);
+        this.getRents();
+
+      });
+    });
   }
 
-  rejectRent(rentId: number){
+  rejectRent(rentId: number) {
     this.rentService.getRentById(rentId).subscribe((rent: Rent) => {
       this.editedRent = rent;
       this.editedRent.approved = 'Rifiutato';
       this.rentService.updateRent(this.editedRent).subscribe(() => {
         this.rentFilteredArray.push(this.editedRent);
-        this.rentArray = _.remove(this.rentArray, (rent) => rent.id !== rentId);
+        this.renderedArray = _.remove(this.renderedArray, (rent:any) => rent.id !== rentId);
+        this.getRents();
       });
     });
   }
@@ -94,7 +136,7 @@ export class RentListComponent implements OnInit {
         this.getRents();
       });
     }
-    else if (action.action === MyTableActionEnum.REJECT){
+    else if (action.action === MyTableActionEnum.REJECT) {
       const rentId = action.rowData.id;
       this.rejectRent(rentId)
     }

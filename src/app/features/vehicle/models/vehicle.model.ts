@@ -1,10 +1,12 @@
+import { Data } from "@angular/router";
+
 export class Vehicle{
     [key: string]: any;
 
     id!: number;
     factory!: string;
     model!: string;
-    plateDate!: string;
+    plateDate!: Date;
     plateNumber!:string;
 
     //generate all getters and setter
@@ -25,12 +27,6 @@ export class Vehicle{
     }
     public set Model(value: string) {
         this.model = value;
-    }
-    public get PlateDate(): string {
-        return this.plateDate;
-    }
-    public set PlateDate(value: string) {
-        this.plateDate = value;
 
     }
     public get PlateNumber(): string {
@@ -40,7 +36,7 @@ export class Vehicle{
         this.plateNumber = value;
     }
 
-    constructor(id:number, factory:string, model:string, plateDate:string, plateNumber:string){
+    constructor(id:number, factory:string, model:string, plateDate:Date, plateNumber:string){
         this.id = id;
         this.factory = factory;
         this.model = model;
