@@ -1,0 +1,39 @@
+version: '3'
+services:
+  frontend:
+    image: frontend:5
+    container_name: frontend_compose
+    ports:
+      - 4200:80
+    networks:
+      - frontend_network
+  backend:
+    image: task_be:modifiedcors
+    container_name: backend_compose
+    ports:
+      - 8080:8080
+    networks:
+      - backend_network
+      - frontend_network
+  db:
+    image: mysql_folder
+    container_name: mysql_final
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - backend_network
+
+volumes:
+  dbdata:
+
+networks:
+  frontend_network:
+    name: frontend_network
+  backend_network:
+    name: backend_network
+
+    

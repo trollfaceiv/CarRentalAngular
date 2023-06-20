@@ -19,14 +19,12 @@ export class AppHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.isAdmin().subscribe((result: boolean) => {
       this.isAdmin = result;
+      console.log(this.isAdmin);
     });
-    console.log(this.isAdmin);
     this.authService.getUserLogged().subscribe(
       (user: User | null) => {
         this.loggedUser = user;
-      },
-      () => {
-        this.loggedUser = null; // Gestisci l'errore impostando l'utente a null
+        console.log(this.loggedUser);
       }
     );
   }

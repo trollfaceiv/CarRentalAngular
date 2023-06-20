@@ -5,15 +5,16 @@ import { tap, map, concatMap } from 'rxjs/operators';
 import { User } from 'src/app/features/user/models/user';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/features/user/services/user.service';
+import { UrlService } from "src/app/core/services/url.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient, private route: Router, private userService: UserService) { }
+  constructor(private http: HttpClient, private route: Router, private userService: UserService, private url:UrlService) { }
 
   register(firstName: string, lastName: string, email: string, password: string, birthDate: Date): Observable<User> {
-    return this.http.post<User>('http://localhost:8080/api/v1/auth/register', { firstName, lastName, email, password, birthDate }).pipe(
+    return this.http.post<User>( this.url.getBaseUrl() + 'api/v1/auth/register', { firstName, lastName, email, password, birthDate }).pipe(
       concatMap(() => this.login(email, password))
     );
   }
@@ -22,7 +23,7 @@ export class AuthService {
 
 
   login(email: string, password: string) {
-    return this.http.post<any>('http://localhost:8080/api/v1/auth/authenticate', { email, password }).pipe(
+    return this.http.post<any>( this.url.getBaseUrl() + 'api/v1/auth/authenticate', { email, password }).pipe(
       map(
         userData => {
           sessionStorage.setItem('email', email);
@@ -83,7 +84,7 @@ export class AuthService {
 
   isAdmin(): Observable<boolean> {
     return this.getUserLogged().pipe(
-      map((user: User | null) => user?.role === 'admin' || false)
+      map((user: User | null) => user?.role === 'ADMIN' || false)
     );
   }
 }

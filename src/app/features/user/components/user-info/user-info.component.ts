@@ -32,7 +32,7 @@ export class UserInfoComponent {
   selectedUser!: User;
   attributes!: MyHeaders[];
   mockUser: User = new User();
-  isAdmin = this.authService.isAdmin();
+  isAdmin!: boolean;
   rentArray!: Rent[];
   
   rentUserTabHeaders: MyTableConfig<Rent> = new MyTableConfig(
@@ -50,6 +50,9 @@ export class UserInfoComponent {
     }
     else{this.getSelectedUser()
     }
+    this.authService.isAdmin().subscribe((result: boolean) => {
+      this.isAdmin = result;
+    });
     this.getAttributes();
  
     

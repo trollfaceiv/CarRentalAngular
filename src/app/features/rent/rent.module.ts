@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     SharedModuleModule,
-    RouterModule
+    RouterModule,
   ],
   exports:[
     NewRentComponent,

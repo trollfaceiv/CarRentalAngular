@@ -1,15 +1,18 @@
 <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+          {{errorMessage}}
+        </div>
         <div *ngIf="invalidTime == false" class="alert alert-danger mt-3" role="alert">
           Intervallo di tempo non valido. Scegli una data di inizio e fine valide.
         </div>
         <div *ngIf="invalidTime == true" class="alert alert-success mt-3 text-center" role="alert">
           Hai noleggiato con successo questo veicolo! Vai al tuo profilo per poter controllare lo status della prenotazione
-          <a class="nav-link text-center" routerLink="/user-info/{{selectedUser.id}}">Il mio profilo</a>
+          <a class="nav-link text-center" routerLink="/user-info/{{selectedUser?.id}}">Il mio profilo</a>
         </div>
         <div class="form-group">
-          <h2 class="text-white">Ciao {{selectedUser.firstName}} stai per noleggiare una {{selectedVehicle.model}}</h2>
+          <h2 class="text-white">Ciao {{selectedUser?.firstName}} stai per noleggiare una {{selectedVehicle.model}}</h2>
           <div class="form-group">
             <label class="text-white" for="startDate">Data inizio noleggio</label>
             <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" class="form-control">

@@ -22,6 +22,7 @@ export class LoginComponent {
 
   login() {
     this.authService.login(this.email, this.password).subscribe((result: boolean) => {
+      console.log(result);
       if (result) {
         console.log("Login effettuato");
         this.authService.getUserLogged().subscribe((user: User | null) => {

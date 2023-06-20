@@ -22,7 +22,7 @@ export class VehicleInfoComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private authService: AuthService, private router: Router) { }
 
   vehicleArray!: Vehicle[];
-  isAdmin!: Observable<boolean>
+  isAdmin!: boolean;
   vehicleTabHeaders: MyTableConfig<Vehicle> = new MyTableConfig(
     ['Id', 'Casa madre', 'Modello', 'Data di Immatricolazione', 'Numero di targa'],
     Vehicle,
@@ -41,7 +41,7 @@ export class VehicleInfoComponent implements OnInit {
       { defaultColumn: 'id', orderType: 'asc' },
       { columns: ['Casa madre', 'Modello'] },
       { itemPerPage: 5, itemPerPageOptions: [5, 10, 20, 50] },
-      [{ type: MyTableActionEnum.INFO, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Info', image: '' } },
+      [
       { type: MyTableActionEnum.RENT, buttonConfig: { customCssClass: 'btn btn-primary mr-2', text: 'Noleggia', image: '' } }
 ]);
   
@@ -51,7 +51,9 @@ export class VehicleInfoComponent implements OnInit {
   ngOnInit(): void {
 
     this.getVehicles();
-    this.isAdmin = this.authService.isAdmin();
+    this.authService.isAdmin().subscribe((result: boolean) => {
+      this.isAdmin = result;
+    });
   }
 
 

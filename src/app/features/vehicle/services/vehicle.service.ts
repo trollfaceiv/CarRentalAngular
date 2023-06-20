@@ -4,6 +4,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable, of} from 'rxjs';
 import { catchError,  map  } from 'rxjs/operators';
 import { Vehicle } from '../models/vehicle.model';
+import { Router } from '@angular/router';
+import { UrlService } from "src/app/core/services/url.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +13,26 @@ import { Vehicle } from '../models/vehicle.model';
 
 
 export class VehicleService {
-  vehicleUrl = 'http://localhost:8080/api/vehicles';
+  vehicleUrl =  this.url.getBaseUrl() + 'api/vehicles';
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private router: Router,
+    private url: UrlService ) { }
 
   getVehicles(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(this.vehicleUrl);
+    return this.http.get<Vehicle[]>(this.vehicleUrl, this.httpOptions).pipe(
+      catchError(this.handleError<Vehicle[]>('getVehicles', []))
+    );
   }
   
   
 
   addVehicle(vehicle: Vehicle): Observable<Vehicle>{
-    return this.http.post<Vehicle>(this.vehicleUrl, vehicle)
+    return this.http.post<Vehicle>(this.vehicleUrl, vehicle, this.httpOptions)
     .pipe(catchError(this.handleError<Vehicle>('addVehicle')))
   }
 
@@ -45,13 +51,15 @@ export class VehicleService {
 
   getVehicleById(id: number): Observable<Vehicle>{ 
     const url = `${this.vehicleUrl}/${id}`
-    return this.http.get<Vehicle>(url).pipe
+    return this.http.get<Vehicle>(url, this.httpOptions).pipe
     (catchError(this.handleError<Vehicle>('getVehicleById')))
   }
 
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      if(error.status == 403)
+        this.router.navigateByUrl('/access-denied');
       console.error(error); // log to console instead
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);

@@ -11,6 +11,7 @@ import { DashboardComponent } from './core/components/dashboard/dashboard.compon
 import { UserListComponent } from './features/user/components/user-list/user-list.component';
 import { UserInfoComponent } from './features/user/components/user-info/user-info.component';
 import { RegisterComponent } from './core/components/register/register.component';
+import { AccessDeniedComponent } from './core/components/access-denied/access-denied.component';
 
 const routes: Routes = [
   { path: 'vehicle-info', component: VehicleInfoComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'user-list', component:UserListComponent, canActivate: [RoleGuard]},
   { path: 'user-info/:id', component: UserInfoComponent, canActivate: [AuthGuard] },
   { path: 'user-info', component: UserInfoComponent, canActivate: [RoleGuard]},
-  { path: 'register', component: RegisterComponent}
+  { path: 'register', component: RegisterComponent},
+  { path: 'access-denied', component: AccessDeniedComponent}
 ]; // sets up routes constant where you define your routes
 
 // configures NgModule imports and exports
